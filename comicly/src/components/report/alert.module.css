@@ -1,0 +1,32 @@
+.alert {
+  width: 40rem;
+  max-width: 100%;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  position: absolute;
+  top: 2rem;
+  background-color: #fae0e4;
+  border-radius: 0.5rem;
+  z-index: 100;
+  box-sizing: border-box;
+  border: 0.1rem solid #ff7096;
+}
+.alert i {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: #ff7096;
+  cursor: pointer;
+}
+.alert header {
+  color: #ff7096;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--input-color);
+}
+.alert header h1 {
+  margin: 0;
+}
+.alert section {
+  color: #ff99ac;
+}

@@ -1,0 +1,74 @@
+:root {
+  --input-color: #f9bec7;
+  --input-size: 1.2rem;
+  --size-of-icon: 2.5rem;
+  --button-padding: 6rem;
+}
+.button,
+.small_button {
+  padding: 1rem;
+  padding-left: var(--button-padding);
+  padding-right: var(--button-padding);
+  font-size: 1.3rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  color: white;
+  background-image: linear-gradient(to left, #ff7096, #ffb3c1);
+  border-radius: 4rem;
+  box-shadow: var(--box-shadow);
+  border: none;
+  cursor: pointer;
+  transition: 0.5s;
+  font-family: inherit;
+}
+.small_button {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+.button_link {
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  background-color: inherit;
+  border: none;
+  color: var(--input-color);
+  font-family: inherit;
+}
+.button:hover {
+  transition: 0.5s;
+  transform: translateY(-1rem);
+}
+.input {
+  width: 100%;
+  position: relative;
+}
+.input input {
+  width: 100%;
+  font-size: var(--input-size);
+  color: var(--input-color);
+  padding: 0.5rem;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid var(--input-color);
+  padding-left: calc(var(--size-of-icon) + 1rem);
+}
+.input input::placeholder {
+  font-size: var(--input-size);
+  color: var(--input-color);
+}
+.wrapIcon {
+  padding: 0.2rem;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: var(--size-of-icon);
+  height: var(--size-of-icon);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #ff477e;
+}
