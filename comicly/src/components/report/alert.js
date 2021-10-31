@@ -1,0 +1,30 @@
+import classes from "./alert.module.css";
+import { useEffect, useState } from "react";
+function Alert({ header, text }) {
+  const [shouldClose, close] = useState(false);
+  useEffect(() => {
+    if (header === "" || text === "") close(true);
+    else close(false);
+  }, [header, text]);
+  return (
+    <>
+      {shouldClose ? null : (
+        <aside className={classes.alert}>
+          <i
+            className="fa fa-times"
+            onClick={() => {
+              close(true);
+            }}
+          ></i>
+          <header>
+            <h1>{header}</h1>
+          </header>
+          <section>
+            <p>{text}</p>
+          </section>
+        </aside>
+      )}
+    </>
+  );
+}
+export default Alert;
