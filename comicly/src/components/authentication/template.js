@@ -11,7 +11,12 @@ function Template({
 }) {
   return (
     <main className={classes.body}>
-      <Alert header={errorHeader} text={errorText} />
+      <Alert
+        header={errorHeader}
+        text={errorText}
+        setErrorHeader={setErrorHeader}
+        setErrorText={setErrorText}
+      />
       <AuthCard setErrorHeader={setErrorHeader} setErrorText={setErrorText}>
         {children}
       </AuthCard>

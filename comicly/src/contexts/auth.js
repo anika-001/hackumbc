@@ -1,51 +1,133 @@
 import React, { useContext, useState, useEffect } from "react";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
-import { auth } from "../firebase";
-import firebase from "firebase/app";
+import app, { auth } from "../firebase";
+import {
+  update,
+  ref,
+  getDatabase,
+  set,
+  get,
+  onValue,
+  query,
+} from "firebase/database";
+
 const AuthContext = React.createContext();
 
 export function AuthProvider({ children }) {
-  const [userInfo, setUserInfo] = useState({ username: "" });
   const [currentUser, setCurrentUser] = useState();
-
-  function setInfo(info) {
-    return setUserInfo(info);
+  const [name, setName] = useState("unnamed");
+  const [id, setId] = useState("");
+  function message(code, message, setErrorHeader, setErrorText) {
+    if (code === "auth/invalid-email") {
+      setErrorHeader("Invalid Email");
+      setErrorText(
+        "Your email address cannot be empty or you have some bad characters in your email. Please fix this error before proceeding."
+      );
+    } else if (code === "auth/internal-error") {
+      setErrorHeader("Internal Error has occured");
+      setErrorText(
+        "Some things are just beyond us, you know. A server error has occured:("
+      );
+    } else if (code === "auth/email-already-exists") {
+      setErrorHeader("User exists");
+      setErrorText(
+        "You must love this site if you keep trying to recreate the same account, haha. We love to see that!!!"
+      );
+    } else if (code === "auth/invalid-password") {
+      setErrorHeader("Password error");
+      setErrorText("Please make sure your password is correct.");
+    } else if (code === "auth/user-not-found") {
+    } else {
+      setErrorHeader("Oops");
+      setErrorText(
+        "Well, this shouldn't be happening. We would be sure to look into this!!! Just give us a heads up so we could resolve this ASAP, thank you!"
+      );
+    }
   }
-  async function signup(email, password) {
-    return createUserWithEmailAndPassword(getAuth(), email, password);
+  useEffect(() => {
+    let unsubscribe;
+    const getUser = async () => {
+      unsubscribe = await auth.onAuthStateChanged((user) => {
+        if (user) {
+          setCurrentUser(user);
+          setId(btoa(user.email));
+          const db = getDatabase(app);
+          console.log(`users/${btoa(user.email)}`);
+          const dbRef = ref(db, `users/${btoa(user.email)}`);
+
+          onValue(query(dbRef), (snapshot) => {
+            console.log(snapshot.val());
+          });
+          console.log(auth.currentUser);
+        }
+      });
+    };
+    getUser();
+
+    return unsubscribe;
+  }, []);
+
+  async function signup(name, email, password, setErrorHeader, setErrorText) {
+    return createUserWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        setCurrentUser(user);
+        const db = getDatabase(app);
+        const dbRef = ref(db, `users/${btoa(name)}`);
+
+        set(dbRef, { name })
+          .then(() => {
+            setName(name);
+            setId(btoa(email));
+          })
+          .catch((err) => {});
+
+        // return user.user.updateProfile({
+        //   displayName: name,
+        // });
+      })
+      .catch((err) => {
+        message(err.code, err.message, setErrorHeader, setErrorText);
+      });
   }
-  const login = (email, password) => {
-    console.log(auth, email, password);
-    return signInWithEmailAndPassword(auth, email, password);
+  const login = async (email, password, setErrorHeader, setErrorText) => {
+    return signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch((err) => {
+        message(err.code, err.message, setErrorHeader, setErrorText);
+      });
   };
 
-  const logout = () => {
-    return auth.signOut();
+  const logout = async (setErrorHeader, setErrorText) => {
+    return signOut(auth)
+      .then(() => {
+        setCurrentUser(undefined);
+      })
+      .catch((err) => {
+        message(err.code, err.message, setErrorHeader, setErrorText);
+      });
   };
 
-  const resetPassword = (email) => {
-    return auth.sendPasswordResetEmail(email);
+  const resetPassword = async (email, setErrorHeader, setErrorText) => {
+    return sendPasswordResetEmail(auth, email).catch((err) => {
+      message(err.code, err.message, setErrorHeader, setErrorText);
+    });
   };
 
-  //   useEffect(() => {
-  //     const unsubscribe = auth.onAuthStateChanged((user) => {
-  //       if (user) {
-  //         setCurrentUser(user);
-  //       }
-  //     });
-  //     return unsubscribe;
-  //   }, [userInfo.url, userInfo.username]);
   const value = {
     currentUser,
     signup,
     login,
     logout,
     resetPassword,
-    setInfo,
+    name,
+    id,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

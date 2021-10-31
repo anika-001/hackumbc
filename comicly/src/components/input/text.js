@@ -6,7 +6,7 @@ function Text({
   name,
   id,
   defaultValue,
-  src = "fa fa-user",
+  src = "fa fa-envelope",
 }) {
   return (
     <div className={classes.input}>

@@ -3,7 +3,7 @@ import Template from "./template";
 import Text from "../input/text";
 import Button from "../input/button";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import { useAuth } from "../../contexts/auth";
 import { useHistory } from "react-router-dom";
 function SignIn() {
@@ -13,13 +13,19 @@ function SignIn() {
   const history = useHistory();
   const email = useRef();
   const password = useRef();
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (authentication.currentUser) {
       history.replace("/");
     }
   });
   function signIn() {
-    authentication.signup(email.current.value, password.current.value);
+    authentication.login(
+      email.current.value,
+      password.current.value,
+      setErrorHeader,
+      setErrorText
+    );
+    console.log(authentication);
   }
   return (
     <Template

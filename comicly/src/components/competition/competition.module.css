@@ -1,0 +1,45 @@
+:root {
+  --player-field-height: 15%;
+}
+.body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.gameBoard {
+  min-height: 30rem;
+  flex-grow: 1;
+  background: #fae0e4;
+}
+.players {
+  min-height: 10rem;
+  background: #f9bec7;
+  height: var(--player-field-height);
+}
+.centered {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.leave {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background: #ff0a54;
+  box-shadow: var(--box-shadow);
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.25rem;
+  color: white;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.leave:hover {
+  transition: 0.3s;
+  transform: translateY(-0.5rem);
+}

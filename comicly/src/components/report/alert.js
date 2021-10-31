@@ -1,6 +1,6 @@
 import classes from "./alert.module.css";
 import { useEffect, useState } from "react";
-function Alert({ header, text }) {
+function Alert({ header, text, setErrorHeader, setErrorText }) {
   const [shouldClose, close] = useState(false);
   useEffect(() => {
     if (header === "" || text === "") close(true);
@@ -13,6 +13,8 @@ function Alert({ header, text }) {
           <i
             className="fa fa-times"
             onClick={() => {
+              setErrorText("");
+              setErrorHeader("");
               close(true);
             }}
           ></i>

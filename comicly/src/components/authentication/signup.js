@@ -3,13 +3,37 @@ import Template from "./template";
 import Text from "../input/text";
 import Button from "../input/button";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../../contexts/auth";
 
 function SignUp() {
+  const authentication = useAuth();
+  const history = useHistory();
+  const email = useRef();
+  const password = useRef();
+  const name = useRef();
+  useLayoutEffect(() => {
+    if (authentication.currentUser) {
+      history.replace("/");
+    }
+  });
   const [errorHeader, setErrorHeader] = useState("");
   const [errorText, setErrorText] = useState("");
-  useEffect(() => {}, []);
+  function signUp() {
+    if (name.current.value.length === 0) {
+      setErrorHeader("Incorrect Name");
+      setErrorText("Your name can't be nothing, is it?");
+    } else {
+      authentication.signup(
+        name.current.value,
+        email.current.value,
+        password.current.value,
+        setErrorHeader,
+        setErrorText
+      );
+    }
+  }
   return (
     <Template
       setErrorHeader={setErrorHeader}
@@ -17,20 +41,23 @@ function SignUp() {
       errorHeader={errorHeader}
       errorText={errorText}
     >
-      <Text placeholder="Email" type="text" name="Email" />
+      <Text
+        placeholder="Full Name"
+        type="text"
+        name="name"
+        reference={name}
+        src="fa fa-user"
+      />
+      <Text placeholder="Email" type="text" name="Email" reference={email} />
       <Text
         placeholder="Password"
         type="password"
         name="password"
         src="fa fa-key"
+        reference={password}
       />
-      <Text
-        placeholder="Confirm Password"
-        type="password"
-        name="password"
-        src="fa fa-key"
-      />
-      <Button center paddingTop="1rem">
+
+      <Button center paddingTop="1rem" onClick={signUp}>
         Sign Up
       </Button>
       <div className={classes.no_acct}>

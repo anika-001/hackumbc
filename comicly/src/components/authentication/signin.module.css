@@ -20,7 +20,7 @@
   height: var(--size-of-top);
   width: 100%;
   object-fit: cover;
-  background-image: linear-gradient(to left, #ff7096, #ffb3c1);
+  background-image: linear-gradient(to left, #fae0e4, #ffb3c1);
   clip-path: ellipse(60% 100% at 50% 0);
   display: flex;
   justify-content: center;
