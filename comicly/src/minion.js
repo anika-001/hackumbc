@@ -1,6 +1,11 @@
 import React from 'react';
+import {useRef} from 'react';
 
+function yfunc(){
+
+}
 function Minion() {
+    let ref = useRef();
     console.log("hello");
     var myArray = [
         "Drew ache",
@@ -15,6 +20,8 @@ function Minion() {
       var  randno=Math.floor(Math.random()*myArray.length);
       var randomItem = myArray[randno];
       var sol=myArraySol[randno];
+      
+
     return (<>
     {/* <div>{randomItem}</div> */}
     <div class="bgimg-23">
@@ -26,7 +33,7 @@ function Minion() {
                         {randomItem}
                     </div>
 
-                    <input class="inp" type="text" placeholder="Your Answer!"/>
+                    <input ref={ref} class="inp" type="text" placeholder="Your Answer!"/>
                     <button class="mybtn"><span>Guess the Gibberish</span></button>
                 </div>
             </div>
