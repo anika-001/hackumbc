@@ -77,7 +77,7 @@ export function AuthProvider({ children }) {
       .then((user) => {
         setCurrentUser(user);
         const db = getDatabase(app);
-        const dbRef = ref(db, `users/${btoa(name)}`);
+        const dbRef = ref(db, `users/${btoa(email)}`);
 
         set(dbRef, { name })
           .then(() => {
