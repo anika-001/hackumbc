@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/auth";
 import { useHistory } from "react-router-dom";
 function Local() {
+  const [myscore, score] = useState(0);
   const authentication = useAuth();
   const history = useHistory();
   useLayoutEffect(() => {
@@ -15,8 +16,8 @@ function Local() {
   return (
     <main className={classes.body}>
       <Leave />
-      <Players nosession />
-      <Game nosession />
+      <Players nosession={authentication.name} myscore={myscore} />
+      <Game nosession={authentication.name} score={score} />
     </main>
   );
 }

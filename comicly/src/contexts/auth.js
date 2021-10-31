@@ -57,13 +57,11 @@ export function AuthProvider({ children }) {
           setCurrentUser(user);
           setId(btoa(user.email));
           const db = getDatabase(app);
-          console.log(`users/${btoa(user.email)}`);
           const dbRef = ref(db, `users/${btoa(user.email)}`);
 
           onValue(query(dbRef), (snapshot) => {
-            console.log(snapshot.val());
+            setName(snapshot.val().name);
           });
-          console.log(auth.currentUser);
         }
       });
     };

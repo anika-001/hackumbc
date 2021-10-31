@@ -98,7 +98,7 @@ function Home() {
           mission is to spread smile, laughter and happiness everywhere!
         </p>
       </div>
-      <div clasNames="bgimg-1"></div>
+      <div clasName="bgimg-1"></div>
       <footer className={footer}>© Copyright 2021 by comicly</footer>
     </div>
   );

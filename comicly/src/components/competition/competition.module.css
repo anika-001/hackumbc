@@ -16,6 +16,15 @@
   min-height: 10rem;
   background: #f9bec7;
   height: var(--player-field-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  overflow: auto;
+}
+.players::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 .centered {
   height: 100%;
@@ -42,4 +51,27 @@
 .leave:hover {
   transition: 0.3s;
   transform: translateY(-0.5rem);
+}
+.name {
+  font-size: 1.2rem;
+  color: #ff0a54;
+}
+.title {
+  font-size: 1rem;
+  color: rgb(241, 175, 185);
+}
+.score {
+  font-size: 2rem;
+  color: #f7cad0;
+}
+.user {
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 1rem;
+  background: white;
+  width: 8rem;
+  height: 8rem;
+  box-shadow: var(--box-shadow);
+  word-break: break-all;
 }
